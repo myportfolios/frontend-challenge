@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useReducer, useEffect, useState} from "react";
+import DetailsPage from "../src/pages/DetailsPage";
+
+export const context = React.createContext();
+
 
 function App() {
+  const initialState = [];
+  const [state, setState] = useState(initialState)
+  useEffect(async () => {
+    let response =  await fetch("https://6025865136244d001797c552.mockapi.io/api/v1/places");
+    let data = await response.json()
+    setState(data)
+  }, [])
+  
   return (
+    <context.Provider value={{state}}>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>hi</h1>
+      <DetailsPage />
     </div>
+    </context.Provider>
   );
 }
 
